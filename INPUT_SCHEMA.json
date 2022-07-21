@@ -3,12 +3,13 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "test": {
-            "title": "Test",
+        "url": {
+            "title": "URL to scrape",
             "type": "string",
-            "description": "There is testing input field description.",
-            "editor": "textfield"
+            "description": "URL to scrape and extract HTML from",
+            "editor": "textfield",
+            "prefill": "https://apify.com"
         }
     },
-    "required": []
+    "required": ["url"]
 }

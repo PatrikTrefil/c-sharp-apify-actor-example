@@ -1,35 +1,29 @@
-# Empty project
+# Example Apify actor in C#
 
-This template is useful when you're already familiar with the Apify SDK and want to start
-with a clean slate. It does not include `puppeteer` or `playwright` so install them manually
-and update the Dockerfile if you need them.
+Minimal example for developing [Apify](https://apify.com/) actor in [C# programming language](https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/). The code is open source.
 
-If you're looking for examples or want to learn more visit:
+The example:
 
-- [Tutorial](https://sdk.apify.com/docs/guides/getting-started)
-- [Documentation](https://sdk.apify.com/docs/api/apify)
-- [Examples](https://sdk.apify.com/docs/examples/crawl-multiple-urls)
+- Reads user provided URL from input
+- Does HTTP request to get HTML from this URL
+- Saves HTML into OUTPUT record in Key Value Store
 
-## Documentation reference
+This actor works both on Apify platform and locally.
 
-- [Apify SDK](https://sdk.apify.com/)
-- [Apify Actor documentation](https://docs.apify.com/actor)
-- [Apify CLI](https://docs.apify.com/cli)
+## Local usage
 
-## Writing a README
+For local usage, you need to:
 
-See our tutorial on [writing READMEs for your actors](https://help.apify.com/en/articles/2912548-how-to-write-great-readme-for-your-actors) if you need more inspiration.
+1. Clone the [repository](https://github.com/PatrikTrefil/c-sharp-apify-actor-example)
+2. [Install dotnet](https://dotnet.microsoft.com/en-us/download)
+3. Create local storage with `apify init` or manually create folder path `apify_storage/key_value_stores/default/`
+4. Add `INPUT.json` file input inside this path that looks like this:
 
-### Table of contents
+```
+{
+    "url": "https://apify.com"
+}
+```
 
-If your README requires a table of contents, use the template below and make sure to keep the `<!-- toc start -->` and `<!-- toc end -->` markers.
-
-<!-- toc start -->
-- Introduction
-- Use Cases
-  - Case 1
-  - Case 2
-- Input
-- Output
-- Miscellaneous
- <!-- toc end -->
+5. Build and run the solution with `dotnet run`
+6. You can find `OUTPUT.html` next to `INPUT.json`

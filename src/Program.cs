@@ -9,7 +9,8 @@ class Program
         var url = "https://apify.com"; // TODO: get url from input
         var pageContent = await client.GetStringAsync(url);
         Console.WriteLine($"Got HTML from URL: {url}");
+        // Output
         var apifyClient = new SimpleApifyClient();
-        await apifyClient.SaveHTMLToKeyValueStore("OUTPUT", new StringContent(pageContent, Encoding.UTF8, "text/html"));
+        await apifyClient.SetOutput(pageContent);
     }
 }

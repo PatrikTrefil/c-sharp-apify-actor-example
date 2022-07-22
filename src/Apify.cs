@@ -54,6 +54,7 @@ public class SimpleApifyClient
 
 public class Apify
 {
+    /// <returns>bool indicating whether the code is running on the Apify platform or locally</returns>
     public static bool isOnApify()
     {
         return Environment.GetEnvironmentVariable("APIFY_IS_AT_HOME") != null;

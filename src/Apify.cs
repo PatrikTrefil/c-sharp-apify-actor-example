@@ -1,4 +1,6 @@
 using System.Text;
+using System.Text.Json;
+using System.Net.Http.Json;
 
 public class SimpleApifyClient
 {
@@ -8,6 +10,14 @@ public class SimpleApifyClient
         public OutputException(string message)
             : base(message) { }
         public OutputException(string message, Exception inner)
+            : base(message, inner) { }
+    }
+    public class InputException : Exception
+    {
+        public InputException() { }
+        public InputException(string message)
+            : base(message) { }
+        public InputException(string message, Exception inner)
             : base(message, inner) { }
     }
     HttpClient httpClient = new HttpClient();
@@ -49,6 +59,46 @@ public class SimpleApifyClient
                 throw new OutputException($"Failed to write output to {pathToOutput}", e);
             }
         }
+    }
+
+    /// <summary>Get input object from INPUT.json from the key-value store</summary>
+    /// <exception cref="InputException">Thrown if getting input failed.</exception>
+    public async Task<inputType> GetInput<inputType>()
+    {
+        inputType? input;
+        if (Apify.isOnApify())
+        {
+            var defaultKeyValueStoreID = Environment.GetEnvironmentVariable("APIFY_DEFAULT_KEY_VALUE_STORE_ID");
+
+            var url = $"https://api.apify.com/v2/key-value-stores/{defaultKeyValueStoreID}/records/INPUT";
+            try
+            {
+                input = await httpClient.GetFromJsonAsync<inputType>(url);
+            }
+            catch (Exception e)
+            {
+                throw new InputException($"Failed to get input from {url}", e);
+            }
+        }
+        else
+        {
+            var storageLocation = Environment.GetEnvironmentVariable("APIFY_LOCAL_STORAGE_DIR") ?? "./apify_storage";
+            var pathToInput = Path.Join(storageLocation, "key_value_stores/default/INPUT.json");
+
+            try
+            {
+                using (var inputStream = new FileStream(pathToInput, FileMode.Open))
+                {
+                    input = JsonSerializer.Deserialize<inputType>(inputStream);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new InputException($"Failed to read input from {pathToInput}", e);
+            }
+        }
+        if (input == null) throw new Exception("Input is null");
+        return input;
     }
 }
 

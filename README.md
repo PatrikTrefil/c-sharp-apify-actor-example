@@ -1,12 +1,12 @@
 # Example Apify actor in C#
 
-Minimal example for developing [Apify](https://apify.com/) actor in [C# programming language](https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/). The code is open source.
+Minimal example for developing [Apify](https://apify.com/) actor in [C# programming language](https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/). [Here](https://apify.com/patrik.trefil/c-sharp-apify-actor-example) is the actor's page on the Apify store. The code is open source.
 
 The example:
 
-- Reads user provided URL from input
-- Does HTTP request to get HTML from this URL
-- Saves HTML into OUTPUT record in Key Value Store
+-   Reads user provided URL from input
+-   Does HTTP request to get HTML from this URL
+-   Saves HTML into OUTPUT record in Key Value Store
 
 This actor works both on Apify platform and locally.
 
